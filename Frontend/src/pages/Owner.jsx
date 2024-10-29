@@ -40,7 +40,7 @@ const Owner = () => {
   const handleCreateOwner = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/owner', formData, {
+      const response = await axios.post('/api/owner', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
