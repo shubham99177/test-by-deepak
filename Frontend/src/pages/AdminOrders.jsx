@@ -10,7 +10,7 @@ const AdminAllOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/allorders');
+                const response = await axios.get('/api/allorders');
                 const data = response.data;
 
                 // Check for users and their orders
