@@ -24,7 +24,7 @@ const Contact = () => {
     
     try {
       // Send the data to the backend API
-      const res = await axios.post('http://localhost:3000/api/contact', formData);
+      const res = await axios.post('/api/contact', formData);
       
       if (res.status === 201) {
         setSubmitted(true);
