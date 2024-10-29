@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
-"scripts": {
-  "test": "nodemon server.js",
-  "start": "node server.js"
-},
+ 
+    "scripts": {
+      "start": "cd Backend && node server.js",
+      "build": "cd Backend && npm install"
+    } ,
+  
+  
 
   "author": "\"Deepak Rathore\"",
   "license": "ISC",
