@@ -6,10 +6,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchBar from "../components/SearchBar";
+import Loader from "../components/Loader";
 import CategoryFilter from "../components/CategoryFilter";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const userRole = localStorage.getItem("owner"); // Retrieve the user role from local storage
@@ -21,6 +23,9 @@ const Home = () => {
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+      }
+      finally {
+        setLoading(false);
       }
     };
 
@@ -74,6 +79,9 @@ const Home = () => {
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
             />
+             {loading ? (
+        <Loader />
+      ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {filteredProducts.map((product) => (
                 <div
@@ -101,8 +109,10 @@ const Home = () => {
                     )}
                   </div>
                 </div>
+              
               ))}
             </div>
+      )}
           </main>
         </div>
       </div>

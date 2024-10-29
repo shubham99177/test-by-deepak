@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const connectDB = require('./config/DB');
+require('dotenv').config();
+
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const expressSession = require('express-session');
@@ -16,8 +18,6 @@ const contactRouter = require('./routes/contactRouter');
 const orderRouter = require('./routes/orderRouter');
 
 const index = require('./routes/index');
-require('dotenv').config();
-
 connectDB();
 app.use(cors());
 app.use(express.json());   // To accept JSON data

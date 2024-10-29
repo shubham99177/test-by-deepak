@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import SearchBar from '../components/SearchBar'; // Import the SearchBar component
 import CategoryFilter from '../components/CategoryFilter'; // Import the CategoryFilter component
 import ImageSlider from '../components/ImageSlider';
+import Loader from "../components/Loader";
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
@@ -19,6 +21,9 @@ const Shop = () => {
         setProducts(response.data);
       } catch (error) {
         console.error('Error fetching products:', error);
+      }
+      finally {
+        setLoading(false);
       }
     };
 
@@ -129,7 +134,9 @@ const Shop = () => {
 
           {/* CategoryFilter Component */}
           <CategoryFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-
+          {loading ? (
+        <Loader />
+      ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
               <div key={product._id} className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -151,6 +158,7 @@ const Shop = () => {
               </div>
             ))}
           </div>
+      )}
         </main>
       </div>
     </div>
