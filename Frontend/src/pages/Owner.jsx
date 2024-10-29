@@ -62,7 +62,7 @@ const Owner = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/api/admin', loginData, {
+      const response = await axios.post('/api/admin', loginData, {
         headers: {
           'Content-Type': 'application/json',
         },
