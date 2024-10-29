@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js "
+    "test": "nodemon server.js " , 
+    "start": "node server.js"
   },
   "author": "\"Deepak Rathore\"",
   "license": "ISC",

@@ -40,10 +40,10 @@ app.use('/api', cartRouter);
 app.use('/api', contactRouter);
 app.use('/api', orderRouter);
 
-const PORT = 3000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT isn't set
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
+
 
 module.exports = app;
