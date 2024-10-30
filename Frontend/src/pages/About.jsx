@@ -6,10 +6,10 @@ const About = () => {
       <div className="max-w-4xl w-full text-center bg-white p-8 rounded-lg shadow-lg mt-3 md:mt-3">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-black">About Us</h1>
         <p className="text-base md:text-lg mb-4 text-gray-700">
-          Welcome to Sactch, your number one source for all things [product, i.e., electronics, apparel, etc.]. We're dedicated to providing you the very best of [product], with an emphasis on quality, customer service, and uniqueness.
+          Welcome to Sactch, your number one source for all things Comic Books , with an emphasis on quality, customer service, and uniqueness. We're dedicated to providing you the very best of Books, with an emphasis on quality, customer service, and uniqueness.
         </p>
         <p className="text-base md:text-lg mb-4 text-gray-700">
-          Founded in 2024 by Deepak Rathore, Sactch has come a long way from its beginnings in [starting location]. When [founder name] first started out, [his/her/their] passion for [brand's passion, i.e., eco-friendly cleaning products] drove them to start their own business.
+          Founded in 2024 by Deepak Rathore, Sactch has come a long way from its beginnings in Agra. When Deepak Rathore first started out, his passion for brand's passion drove them to start their own business.
         </p>
         <p className="text-base md:text-lg mb-4 text-gray-700">
           We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact us.

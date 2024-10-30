@@ -32,6 +32,16 @@ app.use(
 );
 app.use(flash());
 
+
+/* deployment logic */
+app.use(express.static(path.join(__dirname, "Frontend/build")));
+
+// Catch-all handler for routes not handled by API endpoints
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "Frontend/build", "index.html"));
+});
+
+
 app.use('/api', ownersRouter);
 app.use('/api', usersRouter);
 app.use('/api', productsRouter);
