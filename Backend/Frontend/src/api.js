@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://scrach-books-backend.onrender.com/api', // Adjust to your backend URL
+  baseURL: 'https://scrach-backend.onrender.com/api', // Adjust to your backend URL
 });
 
 // Add request interceptor to include the token
