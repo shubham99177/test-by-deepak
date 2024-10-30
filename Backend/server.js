@@ -8,6 +8,7 @@ const cors = require('cors');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
 const path = require('path');
+const MongoStore = require("connect-mongo");
 
 
 const cartRouter = require('./routes/cartRouter');
@@ -28,6 +29,10 @@ app.use(
     resave: false,
     saveUninitialized: true,
     secret: process.env.EXPRESS_SESSION_SECRET,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI, // Ensure this variable is set
+    }),
+    cookie: { secure: false },
   })
 );
 app.use(flash());
