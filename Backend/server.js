@@ -10,7 +10,6 @@ const flash = require('connect-flash');
 const path = require('path');
 const MongoStore = require("connect-mongo");
 
-
 const cartRouter = require('./routes/cartRouter');
 const ownersRouter = require('./routes/ownersRouter');
 const usersRouter = require('./routes/usersRouter');
@@ -18,8 +17,10 @@ const productsRouter = require('./routes/productsRouter');
 const contactRouter = require('./routes/contactRouter');
 const orderRouter = require('./routes/orderRouter');
 
-const index = require('./routes/index');
+// Connect to the database
 connectDB();
+
+// Middleware setup
 app.use(cors());
 app.use(express.json());   // To accept JSON data
 app.use(express.urlencoded({ extended: true }));
@@ -37,26 +38,26 @@ app.use(
 );
 app.use(flash());
 
-
-// app.use(express.static(path.join(__dirname, 'Frontend', 'dist')));
-
-// // Handle all other routes by serving the index.html file
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
-// });
-
+// API routes
 app.use('/api', ownersRouter);
 app.use('/api', usersRouter);
 app.use('/api', productsRouter);
-app.use('/api', index);
 app.use('/api', cartRouter);
 app.use('/api', contactRouter);
 app.use('/api', orderRouter);
 
+// Serve static files from the Frontend/dist directory
+app.use(express.static(path.join(__dirname, 'Frontend', 'dist')));
+
+// Handle all other routes by serving the index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
+});
+
+// Start the server
 const port = process.env.PORT || 3000; // Default to 3000 if process.env.PORT isn't set
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
 
 module.exports = app;
