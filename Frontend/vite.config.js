@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://test-by-deepak-8.onrender.com',
+        target: 'https://scrach-backend.onrender.com',
         changeOrigin: true,
         secure: false
       }
