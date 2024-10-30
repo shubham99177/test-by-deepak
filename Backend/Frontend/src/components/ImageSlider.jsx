@@ -10,8 +10,8 @@ const ImageSlider = () => {
       text: 'Amazing Reading Book Art',
     },
     {
-      url: 'http://www.pixelstalk.net/wp-content/uploads/2016/07/Comic-Book-HD-Wallpaper.jpeg',
-      text: 'Amazing Comic Book Art',
+      url: 'logo.png',
+      text: 'Scrach Books',
     },
     {
       url: 'https://images-cdn.reedsy.com/discovery/post/17/featured_image/large_4776661e463298030274c2929f3ece3313153fe3.jpg',
