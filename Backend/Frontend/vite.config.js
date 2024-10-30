@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://scrach-backend.onrender.com',
+        target: 'https://scrach-books-backend.onrender.com',
         changeOrigin: true,
         secure: false
       }
