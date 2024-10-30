@@ -39,11 +39,11 @@ app.use(flash());
 
 
 /* deployment logic */
-app.use(express.static(path.join(__dirname, "Frontend/build")));
+app.use(express.static(path.join(__dirname, "Frontend/dist")));
 
 // Catch-all handler for routes not handled by API endpoints
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "Frontend/build", "index.html"));
+  res.sendFile(path.join(__dirname, "Frontend/dist", "index.html"));
 });
 
 
