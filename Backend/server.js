@@ -38,12 +38,12 @@ app.use(
 app.use(flash());
 
 
-app.use(express.static(path.join(__dirname, 'Frontend', 'dist')));
+// app.use(express.static(path.join(__dirname, 'Frontend', 'dist')));
 
-// Handle all other routes by serving the index.html file
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
-});
+// // Handle all other routes by serving the index.html file
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
+// });
 
 app.use('/api', ownersRouter);
 app.use('/api', usersRouter);
