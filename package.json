@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js",
-    "start": "node server.js"
+   
+    "start": "nodemon Backend/server.js",
+    "dev": "nodemon Backend/server.js",
+    "build": "npm install && npm install --prefix Frontend && npm run build --prefix Frontend"
   },
   "author": "\"Deepak Rathore\"",
   "license": "ISC",

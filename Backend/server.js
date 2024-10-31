@@ -1,28 +1,29 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const connectDB = require('./config/DB');
-require('dotenv').config();
+const connectDB = require("./config/DB");
+require("dotenv").config();
 
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
-const expressSession = require('express-session');
-const flash = require('connect-flash');
-const path = require('path');
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const expressSession = require("express-session");
+const flash = require("connect-flash");
+const path = require("path");
 const MongoStore = require("connect-mongo");
 
-const cartRouter = require('./routes/cartRouter');
-const ownersRouter = require('./routes/ownersRouter');
-const usersRouter = require('./routes/usersRouter');
-const productsRouter = require('./routes/productsRouter');
-const contactRouter = require('./routes/contactRouter');
-const orderRouter = require('./routes/orderRouter');
+const cartRouter = require("./routes/cartRouter");
+const ownersRouter = require("./routes/ownersRouter");
+const usersRouter = require("./routes/usersRouter");
+const productsRouter = require("./routes/productsRouter");
+const contactRouter = require("./routes/contactRouter");
+const orderRouter = require("./routes/orderRouter");
+const AllProductsRouter = require("./routes/AllProducts")
 
 // Connect to the database
 connectDB();
 
 // Middleware setup
 app.use(cors());
-app.use(express.json());   // To accept JSON data
+app.use(express.json()); // To accept JSON data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
@@ -39,19 +40,19 @@ app.use(
 app.use(flash());
 
 // API routes
-app.use('/api', ownersRouter);
-app.use('/api', usersRouter);
-app.use('/api', productsRouter);
-app.use('/api', cartRouter);
-app.use('/api', contactRouter);
-app.use('/api', orderRouter);
+app.use("/api", ownersRouter);
+app.use("/api", usersRouter);
+app.use("/api", productsRouter);
+app.use("/api", cartRouter);
+app.use("/api", contactRouter);
+app.use("/api", orderRouter);
+app.use("/api", AllProductsRouter);
 
+//deployment logic
 // Serve static files from the Frontend/dist directory
-app.use(express.static(path.join(__dirname, 'Frontend', 'dist')));
-
-// Handle all other routes by serving the index.html file
+app.use(express.static(path.join(__dirname, '..', 'Frontend', 'dist')));
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'Frontend', 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'Frontend', 'dist'));
 });
 
 // Start the server

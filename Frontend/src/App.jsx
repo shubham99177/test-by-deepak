@@ -51,11 +51,7 @@ function AppContent() {
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<LogAbout />} />
         <Route path="/contactus" element={<LogContact />} />
-
-        {/* Define the Home route */}
         <Route path="/login" element={<Index/>} />
-
-        
         <Route path="/404" element={<Notfound />} />
         
 
@@ -68,9 +64,6 @@ function AppContent() {
           </ProtectedRoute>
         }
         />
-        <Route path="/create" element={<OwnerProtect element={<CreatedProduct />} />} />
-        <Route path="/allorders" element={<OwnerProtect element={<AdminOrders />} />} />
-       
          <Route
           path="/contact"
           element={
@@ -85,14 +78,7 @@ function AppContent() {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/owner"
-          element={
-              <Owner />
-
-          }
-        />
-        <Route
+         <Route
           path="/cart"
           element={
             <ProtectedRoute>
@@ -109,11 +95,12 @@ function AppContent() {
           }
         />
 
-        {/* Catch-all for undefined routes */}
+        <Route path="/owner" element={ <Owner />}/>
+        <Route path="/create" element={<OwnerProtect element={<CreatedProduct />} />} />
+        <Route path="/allorders" element={<OwnerProtect element={<AdminOrders />} />} />
+        
         <Route path="*" element={<Notfound />} />
       </Routes>
-
-      {/* Add Footer component at the bottom */}
       <Footer />
     </div>
   );
