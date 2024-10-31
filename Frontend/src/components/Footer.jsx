@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -8,8 +9,16 @@ const Footer = () => {
         <div className="flex items-center mb-2 md:mb-0">
           <img src="logo.png" alt="Company Logo" className="h-16 mr-0.5" /> {/* Adjust the height as needed */}
           <p className="text-center md:text-left">
-            &copy; {new Date().getFullYear()} Your Company. All rights reserved.
-          </p>
+  &copy; {new Date().getFullYear()} Scrach. All rights reserved | developed by 
+  <span 
+    className="text-cyan-600 hover:text-cyan-400 mx-1 cursor-pointer" 
+    onClick={() => window.open("https://deepak-web-portfolio.onrender.com", "_blank", "noopener,noreferrer")}
+  >
+    @developer Deepak
+  </span>
+</p>
+
+
         </div>
           <p className="text-center md:text-left mb-2 md:mb-0">
           <i className="fas fa-envelope mr-2"></i>
