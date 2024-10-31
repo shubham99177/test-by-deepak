@@ -16,7 +16,7 @@ const usersRouter = require("./routes/usersRouter");
 const productsRouter = require("./routes/productsRouter");
 const contactRouter = require("./routes/contactRouter");
 const orderRouter = require("./routes/orderRouter");
-const AllProductsRouter = require("./routes/AllProducts")
+const AllProductsRouter = require("./routes/AllProducts");
 
 // Connect to the database
 connectDB();
@@ -48,11 +48,13 @@ app.use("/api", contactRouter);
 app.use("/api", orderRouter);
 app.use("/api", AllProductsRouter);
 
-//deployment logic
+// Deployment logic
 // Serve static files from the Frontend/dist directory
 app.use(express.static(path.join(__dirname, '..', 'Frontend', 'dist')));
+
+// Serve index.html for all routes not matching API routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'Frontend', 'dist'));
+  res.sendFile(path.join(__dirname, '..', 'Frontend', 'dist', 'index.html'));
 });
 
 // Start the server
