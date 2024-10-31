@@ -10,8 +10,8 @@ const ImageSlider = () => {
       text: 'Amazing Reading Book Art',
     },
     {
-      url: 'logo.png',
-      text: 'Scrach Books',
+      url: 'https://img.elo7.com.br/product/zoom/1EFF730/banner-painel-decorativo-festa-deadpool-1-8x1-2m-aniversario.jpg',
+      text: 'SuperHeros Book Art',
     },
     {
       url: 'https://images-cdn.reedsy.com/discovery/post/17/featured_image/large_4776661e463298030274c2929f3ece3313153fe3.jpg',
