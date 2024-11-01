@@ -3,8 +3,8 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify"; // Importing toast for notifications
-import { FaTrash } from "react-icons/fa"; // Importing a trash icon from react-icons
+import { toast } from "react-toastify"; 
+import { FaTrash } from "react-icons/fa"; 
 
 const Cart = () => {
   const [data, setData] = useState([]);

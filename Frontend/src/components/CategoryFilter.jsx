@@ -5,7 +5,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
     <div className="mb-6 mt-2 flex flex-wrap space-x-2 space-y-2 sm:space-x-4 sm:space-y-0 items-center">
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Hero' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Hero' ? ' bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Hero') 
 
@@ -16,7 +16,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
 
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Biography' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Biography' ? 'bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Biography')}
       >
@@ -25,7 +25,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
 
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Comic' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Comic' ? 'bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Comic')}
       >
@@ -34,7 +34,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
 
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Cartoon' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Cartoon' ? 'bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Cartoon')}
       >
@@ -43,7 +43,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
 
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Programming' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Programming' ? 'bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Programming')}
       >
@@ -51,14 +51,14 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
       </button>
       <button
         className={`h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md ${
-          selectedCategory === 'Business' ? 'bg-blue-500 text-white' : 'bg-gray-300'
+          selectedCategory === 'Business' ? 'bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white' : 'bg-gray-300'
         }`}
         onClick={() => setSelectedCategory('Business')}
       >
         Business Learning
       </button>
       <button
-        className="h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md bg-red-500 text-white"
+        className="h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md bg-red-400 shadow-red-500/50 hover:bg-red-600 text-white"
         onClick={() => setSelectedCategory('')}
       >
         Clear Filter

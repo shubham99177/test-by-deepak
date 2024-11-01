@@ -149,7 +149,7 @@ const Shop = () => {
                   <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
                   <p className="text-gray-600">₹ {product.price}</p>
                   <button
-                    className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 text-white rounded-md hover:bg-cyan-600"
+                    className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600  text-white rounded-md"
                     onClick={() => handleAddToCart(product._id)}
                   >
                     <i className="fa-solid fa-plus mr-2"></i> Add to Cart

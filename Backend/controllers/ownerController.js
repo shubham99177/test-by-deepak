@@ -1,6 +1,8 @@
 const ownerModel = require("../models/owners-model");
-const bcrypt = require('bcrypt'); // For password hashing
-const jwt = require('jsonwebtoken'); // For JWT token generation
+const Product = require('../models/product-model');
+const User = require('../models/user-model');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); 
 
 module.exports.Owner = async (req, res) => {
   try {
@@ -75,5 +77,48 @@ module.exports.loginAdmin = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports.allOrder = async (req, res) => {
+  try {
+      // Fetch all users and their orders
+      const usersWithOrders = await User.find({ "orders.0": { $exists: true } }, 'fullname email orders') // Only fetch users who have orders
+          .populate('orders.productId'); // Populate product details if needed
+
+      if (usersWithOrders.length === 0) {
+          return res.status(404).json({ message: "No orders found." });
+      }
+
+      // Return all users with their orders
+      res.status(200).json({ users: usersWithOrders });
+  } catch (error) {
+      console.error('Error fetching users\' orders:', error);
+      res.status(500).json({ message: "Internal server error." });
+  }
+}
+
+module.exports.RemoveProduct = async (req, res) => {
+  try {
+    const { ownerid, productId } = req.body;
+
+    // Validate owner ID
+    const owner = await ownerModel.findById(ownerid);
+    if (!owner) {
+      return res.status(404).send({ code: 404, message: "Owner not found" });
+    }
+    const product = await Product.findById(productId);
+
+  
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+
+    await Product.deleteOne({ _id: productId });
+
+    return res.send({ code: 200, message: "Product removed successfully" });
+  } catch (error) {
+    console.error("Error removing a Product:", error);
+    return res.status(500).send({ code: 500, message: "Server error" });
   }
 };
