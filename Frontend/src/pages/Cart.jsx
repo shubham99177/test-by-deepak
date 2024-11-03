@@ -3,51 +3,63 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
-import { FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify"; 
+import { FaTrash } from "react-icons/fa"; 
 
 const Cart = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchCartData = async () => {
-      const userid = localStorage.getItem("userid");
+useEffect(() => {
+  const fetchCartData = async () => {
+    const userid = localStorage.getItem("userid");
 
-      if (!userid) {
-        navigate("/");
-        return;
-      }
+    if (!userid) {
+      navigate("/");
+      return;
+    }
 
-      try {
-        const response = await axios.post("/api/cart", { userid });
+    try {
+      const response = await axios.post("/api/cart", { userid });
 
-        if (
-          response.data &&
-          response.data.data &&
-          Array.isArray(response.data.data)
-        ) {
-          // Filter out items with null or invalid productId
-          const validCartItems = response.data.data.filter(
-            (item) => item.productId !== null
-          );
+      if (
+        response.data &&
+        response.data.data &&
+        Array.isArray(response.data.data)
+      ) {
+        // Filter out products that are null or marked as deleted
+        const processedData = response.data.data.map((item) => {
+          if (!item.product || item.product.isDeleted) {
+            return {
+              ...item,
+              product: {
+                name: "This product is no longer available",
+                price: null,
+                image: null,
+              },
+              isUnavailable: true,
+            };
+          }
+          return item;
+        });
 
-          setData(validCartItems);
-        } else {
-          console.warn("Unexpected cart data structure:", response.data);
-          setData([]);
-        }
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
+        setData(processedData);
+      } else {
+        console.warn("Unexpected cart data structure:", response.data);
         setData([]);
-      } finally {
-        setLoading(false);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching cart data:", error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchCartData();
-  }, [navigate]);
+  fetchCartData();
+}, [navigate]);
+
 
   const calculateTotal = (price, quantity, discount) => {
     const totalPrice = price * quantity;
@@ -56,21 +68,61 @@ const Cart = () => {
     return { totalPrice, totalDiscount, finalPrice };
   };
 
+  const updateQuantityInDatabase = async (userId, productId, newQuantity) => {
+    try {
+      const response = await axios.post("/api/cart/update-quantity", {
+        userId,
+        productId,
+        quantity: newQuantity,
+      });
+
+      if (response.status === 200) {
+        console.log("Quantity updated successfully in database");
+      } else {
+        console.error("Failed to update quantity in database");
+      }
+    } catch (error) {
+      console.error("Error updating quantity in database:", error);
+    }
+  };
+
+  const deleteItemFromDatabase = async (userId, productId) => {
+    try {
+      const response = await axios.post("/api/cart/delete", {
+        userId,
+        productId,
+      });
+
+    } catch (error) {
+      console.error("Error deleting item from database:", error);
+    }
+  };
+
   const handleQuantityChange = async (index, action) => {
     const userId = localStorage.getItem("userid");
     const item = data[index];
     const currentQuantity = item.quantity;
-    let updatedQuantity = action === "increment" ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
+    let updatedQuantity;
+
+    if (action === "increment") {
+      updatedQuantity = currentQuantity + 1;
+    } else {
+      updatedQuantity = Math.max(1, currentQuantity - 1);
+    }
 
     setData((prevData) =>
-      prevData.map((item, idx) => idx === index ? { ...item, quantity: updatedQuantity } : item)
+      prevData.map((item, idx) => {
+        if (idx === index) {
+          return {
+            ...item,
+            quantity: updatedQuantity,
+          };
+        }
+        return item;
+      })
     );
 
-    await axios.post("/api/cart/update-quantity", {
-      userId,
-      productId: item.productId._id,
-      quantity: updatedQuantity,
-    });
+    await updateQuantityInDatabase(userId, item.productId._id, updatedQuantity);
   };
 
   const handleDelete = async (index) => {
@@ -79,12 +131,13 @@ const Cart = () => {
 
     setData((prevData) => prevData.filter((_, idx) => idx !== index));
 
-    await axios.post("/api/cart/delete", { userId, productId: item.productId._id });
+    await deleteItemFromDatabase(userId, item.productId._id);
   };
 
   const handlePlaceOrder = async (index) => {
     const userId = localStorage.getItem("userid");
     const item = data[index];
+
     const { finalPrice } = calculateTotal(
       item.productId.price || 0,
       item.quantity || 1,
@@ -100,8 +153,10 @@ const Cart = () => {
 
       if (response.status === 201) {
         toast.success("Order placed successfully!");
+
         setData((prevData) => prevData.filter((_, idx) => idx !== index));
-        await axios.post("/api/cart/delete", { userId, productId: item.productId._id });
+
+        await deleteItemFromDatabase(userId, item.productId._id);
       } else {
         toast.error("Failed to place order.");
       }
@@ -139,7 +194,7 @@ const Cart = () => {
                     <div className="flex flex-row lg:flex-row items-center lg:items-start">
                       {item.productId.image ? (
                         <img
-                          src={`data:image/png;base64,${item.productId.image}`}
+                          src={`data:image/png;base64,${item.productId.image}` || `${item.productId.image}`}
                           alt={item.productId.name}
                           className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-lg mr-4 mb-4 lg:mb-0"
                         />
@@ -158,9 +213,24 @@ const Cart = () => {
                         <p className="text-gray-800 mt-1">
                           Discount: ₹ {item.productId.discount || "N/A"}
                         </p>
-                        <p className="text-gray-800 font-bold mt-2">
-                          Final Price: ₹ {finalPrice}
-                        </p>
+                        <div className="flex items-center mt-2">
+                          <button
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded-l"
+                            onClick={() => handleQuantityChange(index, "decrement")}
+                          >
+                            -
+                          </button>
+                          <span className="text-xl mx-4">{item.quantity}</span>
+                          <button
+                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded-r"
+                            onClick={() => handleQuantityChange(index, "increment")}
+                          >
+                            +
+                          </button>
+                        </div>
+                        <p className="text-gray-800 mt-1">Total Price: ₹ {totalPrice}</p>
+                        <p className="text-gray-800 mt-1">Total Discount: ₹ {totalDiscount}</p>
+                        <p className="text-gray-800 font-bold mt-2">Final Price: ₹ {finalPrice}</p>
                       </div>
                     </div>
                     <div className="flex flex-row justify-end gap-1 items-end mt-3">
@@ -182,7 +252,7 @@ const Cart = () => {
               })}
             </div>
           ) : (
-            <p className="text-center text-gray-600 mt-5">No items in cart</p>
+            <p className="text-center text-gray-600  pt-6">No items in cart</p>
           )}
         </div>
       )}
