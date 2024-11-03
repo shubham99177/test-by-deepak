@@ -3,8 +3,8 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify"; 
-import { FaTrash } from "react-icons/fa"; 
+import { toast } from "react-toastify";
+import { FaTrash } from "react-icons/fa";
 
 const Cart = () => {
   const [data, setData] = useState([]);
@@ -22,9 +22,20 @@ const Cart = () => {
 
       try {
         const response = await axios.post("/api/cart", { userid });
-        if (response.data && Array.isArray(response.data.data)) {
-          setData(response.data.data);
+
+        if (
+          response.data &&
+          response.data.data &&
+          Array.isArray(response.data.data)
+        ) {
+          // Filter out items with null or invalid productId
+          const validCartItems = response.data.data.filter(
+            (item) => item.productId !== null
+          );
+
+          setData(validCartItems);
         } else {
+          console.warn("Unexpected cart data structure:", response.data);
           setData([]);
         }
       } catch (error) {
@@ -52,7 +63,7 @@ const Cart = () => {
     let updatedQuantity = action === "increment" ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
 
     setData((prevData) =>
-      prevData.map((item, idx) => (idx === index ? { ...item, quantity: updatedQuantity } : item))
+      prevData.map((item, idx) => idx === index ? { ...item, quantity: updatedQuantity } : item)
     );
 
     await axios.post("/api/cart/update-quantity", {
@@ -68,20 +79,16 @@ const Cart = () => {
 
     setData((prevData) => prevData.filter((_, idx) => idx !== index));
 
-    await axios.post("/api/cart/delete", {
-      userId,
-      productId: item.productId._id,
-    });
+    await axios.post("/api/cart/delete", { userId, productId: item.productId._id });
   };
 
   const handlePlaceOrder = async (index) => {
     const userId = localStorage.getItem("userid");
     const item = data[index];
-
     const { finalPrice } = calculateTotal(
-      item.productId?.price || 0,
+      item.productId.price || 0,
       item.quantity || 1,
-      item.productId?.discount || 0
+      item.productId.discount || 0
     );
 
     try {
@@ -94,6 +101,7 @@ const Cart = () => {
       if (response.status === 201) {
         toast.success("Order placed successfully!");
         setData((prevData) => prevData.filter((_, idx) => idx !== index));
+        await axios.post("/api/cart/delete", { userId, productId: item.productId._id });
       } else {
         toast.error("Failed to place order.");
       }
@@ -118,9 +126,9 @@ const Cart = () => {
               {data.map((item, index) => {
                 const { totalPrice, totalDiscount, finalPrice } =
                   calculateTotal(
-                    item.productId?.price || 0,
+                    item.productId.price || 0,
                     item.quantity || 1,
-                    item.productId?.discount || 0
+                    item.productId.discount || 0
                   );
 
                 return (
@@ -129,7 +137,7 @@ const Cart = () => {
                     className="w-full border rounded-lg shadow-md p-4 bg-white flex flex-col lg:flex-row items-center justify-between mt-4 max-w-3xl"
                   >
                     <div className="flex flex-row lg:flex-row items-center lg:items-start">
-                      {item.productId?.image ? (
+                      {item.productId.image ? (
                         <img
                           src={`data:image/png;base64,${item.productId.image}`}
                           alt={item.productId.name}
@@ -142,32 +150,17 @@ const Cart = () => {
                       )}
                       <div className="flex flex-col">
                         <h2 className="text-lg md:text-xl font-semibold">
-                          {item.productId?.name || "This product is no longer available"}
+                          {item.productId.name}
                         </h2>
                         <p className="text-gray-700 mt-2">
-                          Price: ₹ {item.productId?.price ?? "N/A"}
+                          Price: ₹ {item.productId.price || "N/A"}
                         </p>
                         <p className="text-gray-800 mt-1">
-                          Discount: ₹ {item.productId?.discount ?? "N/A"}
+                          Discount: ₹ {item.productId.discount || "N/A"}
                         </p>
-                        <div className="flex items-center mt-2">
-                          <button
-                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded-l"
-                            onClick={() => handleQuantityChange(index, "decrement")}
-                          >
-                            -
-                          </button>
-                          <span className="text-xl mx-4">{item.quantity}</span>
-                          <button
-                            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-1 px-2 rounded-r"
-                            onClick={() => handleQuantityChange(index, "increment")}
-                          >
-                            +
-                          </button>
-                        </div>
-                        <p className="text-gray-800 mt-1">Total Price: ₹ {totalPrice}</p>
-                        <p className="text-gray-800 mt-1">Total Discount: ₹ {totalDiscount}</p>
-                        <p className="text-gray-800 font-bold mt-2">Final Price: ₹ {finalPrice}</p>
+                        <p className="text-gray-800 font-bold mt-2">
+                          Final Price: ₹ {finalPrice}
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-row justify-end gap-1 items-end mt-3">
@@ -189,7 +182,7 @@ const Cart = () => {
               })}
             </div>
           ) : (
-            <p className="text-center text-gray-600">No items in cart</p>
+            <p className="text-center text-gray-600 mt-5">No items in cart</p>
           )}
         </div>
       )}
