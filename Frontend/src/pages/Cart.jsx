@@ -22,15 +22,9 @@ const Cart = () => {
 
       try {
         const response = await axios.post("/api/cart", { userid });
-
-        if (
-          response.data &&
-          response.data.data &&
-          Array.isArray(response.data.data)
-        ) {
+        if (response.data && Array.isArray(response.data.data)) {
           setData(response.data.data);
         } else {
-          console.warn("Unexpected cart data structure:", response.data);
           setData([]);
         }
       } catch (error) {
@@ -51,61 +45,21 @@ const Cart = () => {
     return { totalPrice, totalDiscount, finalPrice };
   };
 
-  const updateQuantityInDatabase = async (userId, productId, newQuantity) => {
-    try {
-      const response = await axios.post("/api/cart/update-quantity", {
-        userId,
-        productId,
-        quantity: newQuantity,
-      });
-
-      if (response.status === 200) {
-        console.log("Quantity updated successfully in database");
-      } else {
-        console.error("Failed to update quantity in database");
-      }
-    } catch (error) {
-      console.error("Error updating quantity in database:", error);
-    }
-  };
-
-  const deleteItemFromDatabase = async (userId, productId) => {
-    try {
-      const response = await axios.post("/api/cart/delete", {
-        userId,
-        productId,
-      });
-
-    } catch (error) {
-      console.error("Error deleting item from database:", error);
-    }
-  };
-
   const handleQuantityChange = async (index, action) => {
     const userId = localStorage.getItem("userid");
     const item = data[index];
     const currentQuantity = item.quantity;
-    let updatedQuantity;
-
-    if (action === "increment") {
-      updatedQuantity = currentQuantity + 1;
-    } else {
-      updatedQuantity = Math.max(1, currentQuantity - 1);
-    }
+    let updatedQuantity = action === "increment" ? currentQuantity + 1 : Math.max(1, currentQuantity - 1);
 
     setData((prevData) =>
-      prevData.map((item, idx) => {
-        if (idx === index) {
-          return {
-            ...item,
-            quantity: updatedQuantity,
-          };
-        }
-        return item;
-      })
+      prevData.map((item, idx) => (idx === index ? { ...item, quantity: updatedQuantity } : item))
     );
 
-    await updateQuantityInDatabase(userId, item.productId._id, updatedQuantity);
+    await axios.post("/api/cart/update-quantity", {
+      userId,
+      productId: item.productId._id,
+      quantity: updatedQuantity,
+    });
   };
 
   const handleDelete = async (index) => {
@@ -114,7 +68,10 @@ const Cart = () => {
 
     setData((prevData) => prevData.filter((_, idx) => idx !== index));
 
-    await deleteItemFromDatabase(userId, item.productId._id);
+    await axios.post("/api/cart/delete", {
+      userId,
+      productId: item.productId._id,
+    });
   };
 
   const handlePlaceOrder = async (index) => {
@@ -122,9 +79,9 @@ const Cart = () => {
     const item = data[index];
 
     const { finalPrice } = calculateTotal(
-      item.productId.price || 0,
+      item.productId?.price || 0,
       item.quantity || 1,
-      item.productId.discount || 0
+      item.productId?.discount || 0
     );
 
     try {
@@ -136,10 +93,7 @@ const Cart = () => {
 
       if (response.status === 201) {
         toast.success("Order placed successfully!");
-
         setData((prevData) => prevData.filter((_, idx) => idx !== index));
-
-        await deleteItemFromDatabase(userId, item.productId._id);
       } else {
         toast.error("Failed to place order.");
       }
@@ -164,9 +118,9 @@ const Cart = () => {
               {data.map((item, index) => {
                 const { totalPrice, totalDiscount, finalPrice } =
                   calculateTotal(
-                    item.productId.price || 0,
+                    item.productId?.price || 0,
                     item.quantity || 1,
-                    item.productId.discount || 0
+                    item.productId?.discount || 0
                   );
 
                 return (
@@ -175,9 +129,9 @@ const Cart = () => {
                     className="w-full border rounded-lg shadow-md p-4 bg-white flex flex-col lg:flex-row items-center justify-between mt-4 max-w-3xl"
                   >
                     <div className="flex flex-row lg:flex-row items-center lg:items-start">
-                      {item.productId.image ? (
+                      {item.productId?.image ? (
                         <img
-                          src={`data:image/png;base64,${item.productId.image}` || `${item.productId.image}`}
+                          src={`data:image/png;base64,${item.productId.image}`}
                           alt={item.productId.name}
                           className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-lg mr-4 mb-4 lg:mb-0"
                         />
@@ -188,13 +142,13 @@ const Cart = () => {
                       )}
                       <div className="flex flex-col">
                         <h2 className="text-lg md:text-xl font-semibold">
-                          {item.productId.name}
+                          {item.productId?.name || "This product is no longer available"}
                         </h2>
                         <p className="text-gray-700 mt-2">
-                          Price: ₹ {item.productId.price || "N/A"}
+                          Price: ₹ {item.productId?.price ?? "N/A"}
                         </p>
                         <p className="text-gray-800 mt-1">
-                          Discount: ₹ {item.productId.discount || "N/A"}
+                          Discount: ₹ {item.productId?.discount ?? "N/A"}
                         </p>
                         <div className="flex items-center mt-2">
                           <button

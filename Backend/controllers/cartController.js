@@ -29,6 +29,7 @@ module.exports.addtoCart = async (req, res) => {
     return res.status(500).send({ code: 500, message: "Server error" });
   }
 };
+
 module.exports.Cart = async (req, res) => {
   const { userid } = req.body;
 
