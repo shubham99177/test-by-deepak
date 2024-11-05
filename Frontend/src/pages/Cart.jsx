@@ -76,11 +76,11 @@ useEffect(() => {
         quantity: newQuantity,
       });
 
-      if (response.status === 200) {
-        console.log("Quantity updated successfully in database");
-      } else {
-        console.error("Failed to update quantity in database");
-      }
+      // if (response.status === 200) {
+      //   console.log("Quantity updated successfully in database");
+      // } else {
+      //   console.error("Failed to update quantity in database");
+      // }
     } catch (error) {
       console.error("Error updating quantity in database:", error);
     }
@@ -235,7 +235,7 @@ useEffect(() => {
                     </div>
                     <div className="flex flex-row justify-end gap-1 items-end mt-3">
                       <button
-                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                        className="bg-cyan-400 text-white py-2 px-4 rounded hover:bg-cyan-600 shadow-cyan-500/50"
                         onClick={() => handlePlaceOrder(index)}
                       >
                         Place Order

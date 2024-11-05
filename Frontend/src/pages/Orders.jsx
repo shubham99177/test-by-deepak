@@ -14,15 +14,16 @@ const Orders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             if (!userId) {
-                navigate('/');
+                navigate('/'); // Redirect to home if userId is not found
                 return;
             }
 
             try {
                 const response = await axios.get(`/api/orders/${userId}`);
-                setOrders(response.data.orders); // Populate orders with response data
+                setOrders(response.data.orders || []); // Populate orders with response data
             } catch (error) {
                 console.error("Error fetching orders:", error);
+                toast.error("Failed to fetch orders. Please try again."); // Notify the user of the error
                 setOrders([]); // If there's an error, clear the orders list
             } finally {
                 setLoading(false); // Stop showing the loader
@@ -33,55 +34,59 @@ const Orders = () => {
     }, [userId, navigate]);
 
     // Function to handle order cancellation for a specific product
-    const handleCancelOrder = async (orderId, productId) => {
-        // Show a confirmation toast instead of a confirm dialog
-        const confirmToastId = toast.loading("Are you sure you want to cancel this product from your order?", {
-            autoClose: false,
-            closeOnClick: false,
-            draggable: false,
-            position: "top-center",
-            // You can add custom styling here if needed
-        });
+   // Function to handle order cancellation for a specific product
+const handleCancelOrder = async (orderId, productId) => {
+    const confirmToastId = toast.loading("Processing cancellation...", {
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        position: "top-center",
+    });
 
-        // Listen for user confirmation
-        const confirmation = await new Promise((resolve) => {
-            toast.info("Click Confirm to cancel or Cancel to keep the order.", {
-                onClose: () => resolve(false), // If the user closes, resolve to false
-                onClick: () => resolve(true), // If the user confirms, resolve to true
+    // Listen for user confirmation
+    const confirmation = await new Promise((resolve) => {
+        toast.info("Click Confirm to cancel or Cancel to keep the order.", {
+            onClose: () => resolve(false), // If the user closes, resolve to false
+            onClick: () => resolve(true), // If the user confirms, resolve to true
+        });
+    });
+
+    // Dismiss the loading toast
+    toast.dismiss(confirmToastId);
+
+    if (confirmation) {
+        try {
+            // Call the API to cancel the product from the order
+            const response = await axios.post('/api/orders/delete', {
+                userId,   // Send userId
+                orderId,  // Send orderId
+                productId  // Send productId
             });
-        });
 
-        // Dismiss the loading toast
-        toast.dismiss(confirmToastId);
-
-        if (confirmation) {
-            try {
-                // Call the DELETE API to cancel the product from the order
-                await axios.post('/api/orders/delete', {
-                    userId,   // Send userId
-                    orderId,  // Send orderId
-                    productId // Send productId
-                });
-
-                // Update state: remove the canceled product locally
+            // Assuming the API returns the updated orders
+            if (response.status === 200) {
                 setOrders(prevOrders => 
-                    prevOrders.map(order => ({
-                        ...order,
-                        items: order.items.filter(item => item.productId !== productId) // Adjusted for API response structure
-                    })).filter(order => order.items.length > 0) // Remove empty orders
+                    prevOrders.map(order => (order.orderId === orderId
+                        ? { ...order, items: order.items.filter(item => item.productId !== productId) }
+                        : order
+                    )).filter(order => order.items.length > 0) // Remove empty orders
                 );
 
                 // Notify the user of successful cancellation
                 toast.success("Product canceled successfully!");
-            } catch (error) {
-                console.error("Error canceling order:", error);
-                toast.error("Failed to cancel the product. Please try again.");
+            } else {
+                throw new Error("Failed to cancel the product.");
             }
-        } else {
-            // Notify the user that the cancellation was canceled
-            toast.info("Cancellation aborted.");
+        } catch (error) {
+            console.error("Error canceling order:", error);
+            toast.error("Failed to cancel the product. Please try again.");
         }
-    };
+    } else {
+        toast.info("Cancellation aborted.");
+    }
+};
+
+    
 
     return (
         <div className="min-h-screen bg-gray-100 p-8">
@@ -99,8 +104,8 @@ const Orders = () => {
                                         Order Date: <span className="font-medium">{new Date(order.orderDate).toLocaleDateString()}</span>
                                     </p>
                                     <ul className="mt-4 space-y-2">
-                                        {order.items.map((item, itemIndex) => (
-                                            <li key={itemIndex} className="flex items-center border-b pb-2">
+                                        {order.items.map(item => (
+                                            <li key={item.productId} className="flex items-center border-b pb-2">
                                                 <img 
                                                     src={`data:image/png;base64,${item.productImage}` || `${item.image}`} 
                                                     alt={item.productName}
@@ -118,7 +123,7 @@ const Orders = () => {
                                         ))}
                                     </ul>
                                 </div>
-                            ))}
+                            ))} 
                         </div>
                     ) : (
                         <p className="text-center text-gray-600">No orders found.</p>

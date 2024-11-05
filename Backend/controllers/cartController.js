@@ -35,7 +35,9 @@ module.exports.Cart = async (req, res) => {
 
   try {
     const user = await userModel.findById(userid).populate('cart.productId'); // Populate product details
+
     if (user) {
+      // Return the cart as is, without filtering by isDeleted
       return res.send({ code: 200, message: "Fetched cart", data: user.cart });
     } else {
       return res.status(404).send({ code: 404, message: "User not found" });
@@ -45,6 +47,7 @@ module.exports.Cart = async (req, res) => {
     return res.status(500).send({ code: 500, message: "Server error" });
   }
 };
+
 
 module.exports.updatequantity = async (req, res) => {
   const { userId, productId, quantity } = req.body;

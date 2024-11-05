@@ -25,6 +25,9 @@ router.post('/create', upload.single('image') , async (req, res) => {
     // Save to database
     await newProduct.save();
     let success = req.flash("success");
+    // Check all products and their isDeleted status
+
+
     res.status(201).json({ message: 'Product created successfully', success });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });

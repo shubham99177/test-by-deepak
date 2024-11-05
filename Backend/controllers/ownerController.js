@@ -97,26 +97,31 @@ module.exports.allOrder = async (req, res) => {
       res.status(500).json({ message: "Internal server error." });
   }
 }
-
 module.exports.RemoveProduct = async (req, res) => {
   try {
     const { ownerid, productId } = req.body;
 
-    // Validate owner ID
+    // Check if owner exists
     const owner = await ownerModel.findById(ownerid);
     if (!owner) {
       return res.status(404).send({ code: 404, message: "Owner not found" });
     }
-    const product = await Product.findById(productId);
 
-  
+    // Check if the product exists
+    const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
+      return res.status(404).json({ code: 404, message: 'Product not found' });
     }
 
-    await Product.deleteOne({ _id: productId });
+    // Set isDeleted to true instead of deleting the product
+    if (!product.isDeleted) {
+      product.isDeleted = true;
+      await product.save();
 
-    return res.send({ code: 200, message: "Product removed successfully" });
+      return res.send({ code: 200, message: "Product removed successfully (marked as deleted)" });
+    } else {
+      return res.status(400).json({ code: 400, message: "Product is already marked as deleted" });
+    }
   } catch (error) {
     console.error("Error removing a Product:", error);
     return res.status(500).send({ code: 500, message: "Server error" });
