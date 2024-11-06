@@ -3,10 +3,10 @@ import React from 'react';
 const About = () => {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4 py-1 md:px-10 md:py-10 mt-20  mb-3">
-      <div className="max-w-4xl w-full text-center bg-white p-8 rounded-lg shadow-lg mt-3 md:mt-3">
+      <div className="max-w-4xl w-full text-center bg-white p-8 rounded-lg shadow-2xl mt-3 md:mt-3">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-6 text-black">About Us</h1>
         <p className="text-base md:text-lg mb-4 text-gray-700">
-          Welcome to Sactch, your number one source for all things Comic Books , with an emphasis on quality, customer service, and uniqueness. We're dedicated to providing you the very best of Books, with an emphasis on quality, customer service, and uniqueness.
+          Welcome to Scrach, your number one source for all things Comic Books , with an emphasis on quality, customer service, and uniqueness. We're dedicated to providing you the very best of Books, with an emphasis on quality, customer service, and uniqueness.
         </p>
         <p className="text-base md:text-lg mb-4 text-gray-700">
           Founded in 2024 by Deepak Rathore, Sactch has come a long way from its beginnings in Agra. When Deepak Rathore first started out, his passion for brand's passion drove them to start their own business.

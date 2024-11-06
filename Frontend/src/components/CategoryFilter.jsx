@@ -58,7 +58,7 @@ const CategoryFilter = ({ selectedCategory, setSelectedCategory }) => {
         Business Learning
       </button>
       <button
-        className="h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md bg-red-600 shadow-red-500/50  text-white"
+        className="h-10 lg:h-auto lg:px-3 lg:py-2 px-2 py-1 text-xs lg:text-sm rounded-md bg-red-400 shadow-red-500/50  text-white"
         onClick={() => setSelectedCategory('')}
       >
         Clear Filter

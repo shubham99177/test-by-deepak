@@ -139,7 +139,7 @@ const Shop = () => {
       ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {filteredProducts.map((product) => (
-              <div key={product._id} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div key={product._id} className="bg-white rounded-lg shadow-2xl overflow-hidden">
                 <img
                   src={`data:image/png;base64,${product.image}`}
                   alt={product.name}

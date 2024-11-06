@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white  z-50 shadow-md "> {/* Add sticky and top-0 */}
+    <nav className="fixed top-0 left-0 right-0 bg-white  z-50 shadow-md items-center"> {/* Add sticky and top-0 */}
       <div className="max-w-7xl p-4 sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-12">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -56,7 +56,7 @@ const Navbar = () => {
 
           <div className="flex-1 flex items-center justify-between">
             <Link to="/shop">
-              <div className="flex items-center pl-7 flex-shrink-0">
+              <div className="flex items-center pl-7 flex-shrink-0 text-center ">
                 <img className="h-20 w-auto" src="logo.png" alt="" />
                 <p to="/shop" className="text-black text-2xl font-bold hover:text-cyan-500">
                   Scrach
@@ -105,7 +105,7 @@ const Navbar = () => {
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link
             to="/shop"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Shop
@@ -113,28 +113,28 @@ const Navbar = () => {
           
           <Link
             to="/cart"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Cart
           </Link>
           <Link
             to="/orders"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Orders
           </Link>
           <Link
             to="/about"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             About us
           </Link>
           <Link
             to="/contact"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Contact us

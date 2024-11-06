@@ -49,7 +49,7 @@ const AdminAllOrders = () => {
     }, []);
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-8 mt-20 bg-gray-200">
+        <div className="max-w-5xl mx-auto px-4 py-8 mt-20 ">
             <LogNav />
 
             {loading ? (
@@ -62,7 +62,7 @@ const AdminAllOrders = () => {
                 Array.isArray(allOrders) && allOrders.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {allOrders.map((order, index) => (
-                            <div key={index} className="bg-white shadow-lg rounded-lg p-4">
+                            <div key={index} className="bg-white shadow-2xl rounded-lg p-4">
                                 <h2 className="text-xl font-semibold">Customer Name: {order.customerName}</h2>
                                 <div>
                                 <p className="text-gray-700 font-semibold">Order Date: {new Date(order.orderDate).toISOString().split('T')[0]}</p>

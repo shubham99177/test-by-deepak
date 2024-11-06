@@ -188,7 +188,7 @@ const Home = () => {
                 {filteredProducts.map((product) => (
                   <div
                     key={product._id}
-                    className="bg-white rounded-lg shadow-md overflow-hidden"
+                    className="bg-white rounded-lg shadow-2xl overflow-hidden"
                   >
                     <img
                       src={`data:image/png;base64,${product.image}`}

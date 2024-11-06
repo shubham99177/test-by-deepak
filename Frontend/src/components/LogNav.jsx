@@ -155,7 +155,7 @@ const LogNav = () => {
           
           <Link
             to="/"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Home
@@ -164,14 +164,14 @@ const LogNav = () => {
             <>
             <Link
               to="/create"
-              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setIsOpen(false)}
             >
               Create
             </Link>
             <Link
             to="/allorders"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Orders
@@ -180,14 +180,14 @@ const LogNav = () => {
           )}
           <Link
             to="/aboutus"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             About us
           </Link>
           <Link
             to="/contactus"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
             onClick={() => setIsOpen(false)}
           >
             Contact us
