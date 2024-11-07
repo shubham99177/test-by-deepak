@@ -7,6 +7,7 @@ import LogNav from "../components/LogNav";
 
 const BookInfo = () => {
   const location = useLocation();
+  const userRole = localStorage.getItem("owner");
   const product = location.state?.product;
 
   if (!product) {
@@ -86,13 +87,14 @@ const BookInfo = () => {
             <i className="fa-solid fa-arrow-left-long mr-2"></i>
             Go Back
           </Link>
-          <button
-            onClick={() => handleAddToCart(product._id)}
-            className="flex items-center justify-center w-40 p-2 bg-cyan-500 text-white rounded-md shadow-lg hover:bg-cyan-600"
-          >
-            <i className="fa-solid fa-plus mr-2"></i> Add to Cart
-          </button>
-         
+          {!userRole && (
+            <button
+              onClick={() => handleAddToCart(product._id)}
+              className="flex items-center justify-center w-40 p-2 bg-cyan-500 text-white rounded-md shadow-lg hover:bg-cyan-600"
+            >
+              <i className="fa-solid fa-plus mr-2"></i> Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </>
