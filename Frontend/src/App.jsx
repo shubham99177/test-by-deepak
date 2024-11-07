@@ -25,6 +25,8 @@ import Footer from "./components/Footer"; // Import Footer
 import LogAbout from "./components/LogAbout";
 import LogContact from "./components/LogContact";
 import AdminOrders from "./pages/AdminOrders";
+import BookInfo from "./pages/BookInfo";
+import Info from "./pages/Info";
 
 function AppContent() {
   const location = useLocation();
@@ -39,7 +41,7 @@ function AppContent() {
   };
 
   // Define paths where Nav should be displayed
-  const navPaths = ["/about", "/owner", "/cart", "/shop" , "/contact", "/orders"];
+  const navPaths = ["/about", "/owner", "/cart", "/shop" , "/contact", "/orders" , "/info"];
 
   return (
     <div>
@@ -53,6 +55,7 @@ function AppContent() {
         <Route path="/contactus" element={<LogContact />} />
         <Route path="/login" element={<Index/>} />
         <Route path="/404" element={<Notfound />} />
+        <Route path="/bookinfo" element={<BookInfo />} />
         
 
         {/* Protected routes */}
@@ -64,6 +67,13 @@ function AppContent() {
           </ProtectedRoute>
         }
         />
+        <Route
+          path="/info"
+          element={
+            <ProtectedRoute>
+           <Info/>
+          </ProtectedRoute>
+        } />
          <Route
           path="/contact"
           element={

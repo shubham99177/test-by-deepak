@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import ImageSlider from "../components/ImageSlider";
 import LogNav from "../components/LogNav";
 import axios from "axios";
@@ -15,7 +15,7 @@ const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const userRole = localStorage.getItem("owner"); // Retrieve the user role from local storage
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -56,6 +56,17 @@ const Home = () => {
         console.error(err.message);
       });
   };
+  
+
+const handleInfo = async (productId) => {
+  try {
+    const data = { productId };
+    const response = await axios.post('/api/get-product', data);
+    navigate('/bookinfo', { state: { product: response.data } });
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+  }
+};
 
   const handleAddToCart = (productId) => {
     const userid = localStorage.getItem("userid");
@@ -199,23 +210,45 @@ const Home = () => {
                       <h3 className="text-lg font-semibold text-gray-800">
                         {product.name}
                       </h3>
-                      <p className="text-gray-600">₹ {product.price}</p>
+                      <p className="text-teal-500 font-bold">₹ {product.price}/-</p>
                       {/* Conditionally render Add to Cart button if user is not owner */}
                       {userRole ? (
+                        <>
+                          <div className="flex justify-center items-centers space-x-2 ">
                         <button
                           className="mt-4 flex items-center justify-center w-full p-2 bg-red-500 shadow-red-500/50 text-white rounded-md hover:bg-red-600"
                           onClick={() => handleRemoveProduct(product._id)}
                         >
                           <i className="fa-solid fa-trash mr-2"></i> Remove
-                          Product
+                          
                         </button>
-                      ) : (
                         <button
-                          className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 text-white rounded-md hover:bg-cyan-600"
-                          onClick={() => handleAddToCart(product._id)}
-                        >
-                          <i className="fa-solid fa-plus mr-2"></i> Add to Cart
-                        </button>
+                              className="mt-4 flex items-center justify-center w-full p-2 bg-teal-500 shadow-teal-500/50 text-white rounded-md hover:bg-teal-600"
+                              onClick={() => handleInfo(product._id)}
+                            >
+                              <i className="fa-solid fa-info mr-1"></i>
+                              info
+                            </button>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex justify-center items-centers space-x-2 ">
+                            <button
+                              className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 text-white rounded-md hover:bg-cyan-600"
+                              onClick={() => handleAddToCart(product._id)}
+                            >
+                              <i className="fa-solid fa-plus mr-1 "></i> Add
+                            </button>
+                            <button
+                              className="mt-4 flex items-center justify-center w-full p-2 bg-teal-500 shadow-teal-500/50 text-white rounded-md hover:bg-teal-600"
+                              onClick={() => handleInfo(product._id)}
+                            >
+                              <i className="fa-solid fa-info mr-1"></i>
+                              info
+                            </button>
+                          </div>
+                        </>
                       )}
                     </div>
                   </div>

@@ -10,9 +10,10 @@ const CreateProduct = () => {
     name: '',
     price: '',
     discount: '',
-    bgcolor: '',
-    panelcolor: '',
-    textcolor: '',
+    author: '',
+    description: '',
+    ISBN: '',
+    publisher: '',
     image: null,
   });
 
@@ -99,29 +100,37 @@ const CreateProduct = () => {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold mb-2 text-center">Panel Details:</h3>
+                <h3 className="text-lg font-semibold mb-2 text-center">Book Details:</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
-                    name="bgcolor"
+                    name="author"
                     type="text"
-                    placeholder="Background Color"
-                    value={formData.bgcolor}
+                    placeholder="Authore"
+                    value={formData.author}
                     onChange={handleChange}
                     className="border p-2 rounded w-full"
                   />
                   <input
-                    name="panelcolor"
+                    name="description"
                     type="text"
-                    placeholder="Panel Color"
-                    value={formData.panelcolor}
+                    placeholder="Book Description"
+                    value={formData.description}
                     onChange={handleChange}
                     className="border p-2 rounded w-full"
                   />
                   <input
-                    name="textcolor"
+                    name="ISBN"
                     type="text"
-                    placeholder="Text Color"
-                    value={formData.textcolor}
+                    placeholder="ISBN"
+                    value={formData.ISBN}
+                    onChange={handleChange}
+                    className="border p-2 rounded w-full"
+                  />
+                   <input
+                    name="publisher"
+                    type="text"
+                    placeholder="publisher"
+                    value={formData.publisher}
                     onChange={handleChange}
                     className="border p-2 rounded w-full"
                   />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,6 +13,7 @@ const Shop = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -30,6 +31,15 @@ const Shop = () => {
     fetchProducts();
   }, []);
 
+  const handleInfo = async (productId) => {
+    try {
+      const data = { productId };
+      const response = await axios.post('/api/get-product', data);
+      navigate('/info', { state: { product: response.data } });
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+    }
+  };
   const handleAddToCart = (productId) => {
     const _productId = productId;
     const userid = localStorage.getItem('userid');
@@ -147,13 +157,22 @@ const Shop = () => {
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
-                  <p className="text-gray-600">₹ {product.price}</p>
+                  <p className="text-teal-600">₹ {product.price}/-</p>
+                  <div className='flex justify-center items-center space-x-4'>
                   <button
                     className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600  text-white rounded-md"
                     onClick={() => handleAddToCart(product._id)}
                   >
-                    <i className="fa-solid fa-plus mr-2"></i> Add to Cart
+                    <i className="fa-solid fa-plus mr-2"></i> Add 
                   </button>
+                  <button
+                              className="mt-4 flex items-center justify-center w-full p-2 bg-teal-500 shadow-teal-500/50 text-white rounded-md hover:bg-teal-600"
+                              onClick={() => handleInfo(product._id)}
+                            >
+                              <i className="fa-solid fa-info mr-1"></i>
+                              info
+                            </button>
+                  </div>
                 </div>
               </div>
             ))}
