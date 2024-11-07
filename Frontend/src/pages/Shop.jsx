@@ -157,7 +157,7 @@ const Shop = () => {
                 />
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-800">{product.name}</h3>
-                  <p className="text-teal-600">₹ {product.price}/-</p>
+                  <p className="text-teal-600 font-bold">₹ {product.price}/-</p>
                   <div className='flex justify-center items-center space-x-4'>
                   <button
                     className="mt-4 flex items-center justify-center w-full p-2 bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600  text-white rounded-md"
