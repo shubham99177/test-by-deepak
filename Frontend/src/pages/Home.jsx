@@ -6,7 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SearchBar from "../components/SearchBar";
-import CardSkeleton from "../components/CardSkeleton";
+import CardSkeleton from "../components/CardSkelton";
 import CategoryFilter from "../components/CategoryFilter";
 
 const Home = () => {
