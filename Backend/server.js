@@ -22,7 +22,10 @@ const AllProductsRouter = require("./routes/AllProducts");
 connectDB();
 
 // Middleware setup
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+};
+app.use(cors(corsOptions));
 app.use(express.json()); // To accept JSON data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
