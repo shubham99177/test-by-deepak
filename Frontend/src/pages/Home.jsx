@@ -69,7 +69,70 @@ const Home = () => {
         <ToastContainer />
         <div className="flex flex-col md:flex-row md:space-x-8 p-4">
           <aside className="md:w-1/4 mb-4 md:mb-0">
-            {/* Your existing code for sidebar */}
+            <div className="flex flex-col space-y-6">
+              {/* Unique Section with images and hover effects */}
+              <div className="space-y-4">
+                <h2 className="text-3xl md:text-2xl items-center font-bold text-gray-800 hover:text-cyan-400 text-center  tracking-wide   px-4">
+                  Varieties of Books
+                </h2>
+
+                <Link
+                  to="/shop"
+                  className="relative group block overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                    alt="Reading Books"
+                    className="w-full h-36 object-cover transition-transform transform group-hover:scale-110 duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Reading Books
+                  </div>
+                </Link>
+
+                <Link
+                  to="/shop"
+                  className="relative group block overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="https://i.etsystatic.com/13702629/r/il/067798/1979047720/il_1588xN.1979047720_kthx.jpg"
+                    alt="Comic Books"
+                    className="w-full h-36 object-cover transition-transform transform group-hover:scale-110 duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Comic Books
+                  </div>
+                </Link>
+
+                <Link
+                  to="/shop"
+                  className="relative group block overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1517433456452-f9633a875f6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60"
+                    alt="Programming Books"
+                    className="w-full h-36 object-cover transition-transform transform group-hover:scale-110 duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Programming Books
+                  </div>
+                </Link>
+
+                <Link
+                  to="/shop"
+                  className="relative group block overflow-hidden rounded-lg shadow-lg"
+                >
+                  <img
+                    src="https://asset22.ckassets.com/blog/wp-content/uploads/sites/5/2019/05/Autobiography.jpg"
+                    alt="Biography Books"
+                    className="w-full h-36  object-center transition-transform transform group-hover:scale-110 duration-300"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Biography Books
+                  </div>
+                </Link>
+              </div>
+            </div>
           </aside>
           <main className="md:w-3/4">
             <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -95,7 +158,9 @@ const Home = () => {
                       <h3 className="text-lg font-semibold text-gray-800">
                         {product.name}
                       </h3>
-                      <p className="text-teal-500 font-bold">₹ {product.price}/-</p>
+                      <p className="text-teal-500 font-bold">
+                        ₹ {product.price}/-
+                      </p>
                       {userRole ? (
                         <div className="flex justify-center items-center space-x-2">
                           <button
