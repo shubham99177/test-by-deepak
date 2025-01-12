@@ -10,7 +10,7 @@ const ImageSlider = () => {
       text: 'Amazing Reading Book Art',
     },
     {
-      url: 'https://img.elo7.com.br/product/zoom/1EFF730/banner-painel-decorativo-festa-deadpool-1-8x1-2m-aniversario.jpg',
+      url: 'https://www.comicbasics.com/wp-content/uploads/2019/02/Best-Superhero-Movies-Of-The-Last-10-Years-1.jpg',
       text: 'SuperHeros Book Art',
     },
     {

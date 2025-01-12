@@ -1,12 +1,11 @@
 // Login.js
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../store/authSlice"; // Import login action from authSlice
 import { ToastContainer } from "react-toastify";
 import { toast } from "react-toastify"; // Import toast
-
 
 const Login = () => {
   const navigate = useNavigate();
@@ -36,21 +35,27 @@ const Login = () => {
       dispatch(login(data.token)); // Update Redux state with the token
 
       // Redirect to protected /shop route
-      navigate("/shop");
+      toast.success("Login Successful")
+      setTimeout(() => {
+        navigate("/shop");
+      },2000);
     } catch (err) {
       if (err.response && err.response.data.message) {
         toast.error(err.response.data.message); // Display specific backend error (e.g., "User already exists")
       } else {
         toast.error("Something went wrong."); // Use toast instead of alert
+      }
     }
-  };
   };
   return (
     <div className="w-full max-w-md mx-auto lg:w-1/2 flex items-center justify-center h-screen p-4">
       <ToastContainer />
       <div className="w-full px-6 lg:px-12">
         <h3 className="block md:hidden text-3xl lg:text-4xl font-bold text-center mb-2">
-          Welcome Back to <span className="text-cyan-400 shadow-cyan-500/50 hover:text-cyan-600">Scatch</span>
+          Welcome Back to{" "}
+          <span className="text-cyan-400 shadow-cyan-500/50 hover:text-cyan-600">
+            Scatch
+          </span>
         </h3>
 
         <h4 className="text-xl lg:text-2xl mb-5 text-center">
@@ -71,6 +76,9 @@ const Login = () => {
             name="password"
             onChange={(e) => setPassword(e.target.value)}
           />
+          <Link to="forget-password">
+            <p className="text-gray-700 text-xs hover:underline"> Forget Password?</p>
+          </Link>
           <input
             className="w-full py-2 mt-2 bg-cyan-400 shadow-cyan-500/50 hover:bg-cyan-600 text-white font-semibold rounded-full cursor-pointer"
             type="submit"
@@ -83,4 +91,3 @@ const Login = () => {
 };
 
 export default Login;
-

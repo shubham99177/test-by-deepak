@@ -27,6 +27,8 @@ import LogContact from "./components/LogContact";
 import AdminOrders from "./pages/AdminOrders";
 import BookInfo from "./pages/BookInfo";
 import Info from "./pages/Info";
+import ForgetPassword from "./pages/ForgetPassword";
+import  ResetPassword from "./pages/ResetPassword"
 
 function AppContent() {
   const location = useLocation();
@@ -56,6 +58,8 @@ function AppContent() {
         <Route path="/login" element={<Index/>} />
         <Route path="/404" element={<Notfound />} />
         <Route path="/bookinfo" element={<BookInfo />} />
+        <Route path="/login/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         
 
         {/* Protected routes */}

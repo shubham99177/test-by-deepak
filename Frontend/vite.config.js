@@ -9,7 +9,7 @@ export default defineConfig({
       '/api': {
         target: 'https://scrach-books.onrender.com',
         changeOrigin: true,
-        secure: false
+        secure: true
       }
     }
   }

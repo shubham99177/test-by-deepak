@@ -101,16 +101,7 @@ const Shop = () => {
                 </div>
               </Link>
 
-              <Link to="/shop" className="relative group block overflow-hidden rounded-lg shadow-lg">
-                <img 
-                  src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60" 
-                  alt="Self Help" 
-                  className="w-full h-36 object-cover transition-transform transform group-hover:scale-110 duration-300"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Self Help
-                </div>
-              </Link>
+              
 
               <Link to="/shop" className="relative group block overflow-hidden rounded-lg shadow-lg">
                 <img 

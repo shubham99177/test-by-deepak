@@ -33,14 +33,17 @@ const Register = () => {
         config
       );
 
-      console.log(data);
+      // console.log(data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("userid", data.userid);
       localStorage.setItem("userInfo", JSON.stringify(data));
       dispatch(login(data.token)); // Dispatch the login action
 
-      console.log("Redirecting to /shop...");
-      navigate("/shop");
+      toast.success("Account created successfully");
+      setTimeout(() => {
+        navigate('/shop');
+      }, 2000);
+     
     } catch (err) {
       if (err.response && err.response.data.message) {
         toast.error(err.response.data.message); // Display specific backend error (e.g., "User already exists")
